@@ -2,9 +2,9 @@ package gobotSpark
 
 import (
 	"fmt"
+	"github.com/hybridgroup/gobot"
 	"net/http"
 	"net/url"
-	"github.com/hybridgroup/gobot"
 )
 
 type SparkAdaptor struct {
@@ -19,13 +19,13 @@ func (me *SparkAdaptor) Disconnect() {
 
 func (me *SparkAdaptor) DigitalWrite(pin string, level string) {
 	params := url.Values{
-		"params": {fmt.Sprintf("%v,%v", pin, me.pinLevel(level))},
+		"params":       {fmt.Sprintf("%v,%v", pin, me.pinLevel(level))},
 		"access_token": {me.Params["access_token"].(string)},
 	}
 	url := fmt.Sprintf("%v/digitalwrite", me.deviceUrl())
 	_, err := http.PostForm(url, params)
 	if err != nil {
-		panic(err)
+		fmt.Println("Error writing to spark device", me.Name, err)
 	}
 }
 
