@@ -32,7 +32,7 @@ func (me *SparkAdaptor) AnalogRead(pin string) float64 {
 	return 0
 }
 
-func (me *SparkAdaptor) AnalogWrite(pin string, level string) {
+func (me *SparkAdaptor) AnalogWrite(pin string, level uint8) {
 	params := url.Values{
 		"params":       {fmt.Sprintf("%v,%v", pin, level)},
 		"access_token": {me.Params["access_token"].(string)},
