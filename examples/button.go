@@ -26,12 +26,6 @@ func main() {
 	led.Pin = "D7"
 
 	work := func() {
-		led.Off()
-		go func() {
-			for {
-				fmt.Println("update", gobot.On(button.Events["update"]))
-			}
-		}()
 		go func() {
 			for {
 				fmt.Println("push", gobot.On(button.Events["push"]))

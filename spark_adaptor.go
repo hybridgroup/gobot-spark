@@ -50,7 +50,7 @@ func (me *SparkAdaptor) DigitalWrite(pin string, level string) {
 	me.postToSpark(url, params)
 }
 
-func (me *SparkAdaptor) DigitalRead(pin string) float64 {
+func (me *SparkAdaptor) DigitalRead(pin string) int {
 	params := url.Values{
 		"params":       {pin},
 		"access_token": {me.Params["access_token"].(string)},
@@ -58,9 +58,9 @@ func (me *SparkAdaptor) DigitalRead(pin string) float64 {
 	url := fmt.Sprintf("%v/digitalread", me.deviceUrl())
 	resp := me.postToSpark(url, params)
 	if resp != nil {
-		return resp["return_value"].(float64)
+		return int(resp["return_value"].(float64))
 	}
-	return 0
+	return -1
 }
 
 func (me *SparkAdaptor) deviceUrl() string {
