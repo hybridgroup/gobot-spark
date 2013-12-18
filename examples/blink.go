@@ -20,14 +20,14 @@ func main() {
 	led.Pin = "D7"
 
 	work := func() {
-		gobot.Every("5s", func() {
+		gobot.Every("2s", func() {
 			led.Toggle()
 		})
 	}
 
 	robot := gobot.Robot{
-		Connections: []interface{}{spark},
-		Devices:     []interface{}{led},
+		Connections: []gobot.Connection{spark},
+		Devices:     []gobot.Device{led},
 		Work:        work,
 	}
 

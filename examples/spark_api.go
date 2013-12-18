@@ -7,6 +7,8 @@ import (
 )
 
 func main() {
+	master := gobot.GobotMaster()
+	gobot.Api(master)
 
 	spark := new(gobotSpark.SparkAdaptor)
 	spark.Name = "spark"
@@ -17,26 +19,20 @@ func main() {
 
 	led := gobotGPIO.NewLed(spark)
 	led.Name = "led"
-	led.Pin = "A1"
+	led.Pin = "D7"
 
 	work := func() {
-		brightness := uint8(0)
-		fade_amount := uint8(15)
-
-		gobot.Every("0.5s", func() {
-			led.Brightness(brightness)
-			brightness = brightness + fade_amount
-			if brightness == 0 || brightness == 255 {
-				fade_amount = -fade_amount
-			}
+		gobot.Every("1s", func() {
+			led.Toggle()
 		})
 	}
 
-	robot := gobot.Robot{
-		Connections: []Connection{spark},
-		Devices:     []Device{led},
+	master.Robots = append(master.Robots, gobot.Robot{
+		Name:        "spark",
+		Connections: []gobot.Connection{spark},
+		Devices:     []gobot.Device{led},
 		Work:        work,
-	}
+	})
 
-	robot.Start()
+	master.Start()
 }

@@ -36,8 +36,8 @@ func main() {
 	}
 
 	robot := gobot.Robot{
-		Connections: []interface{}{spark},
-		Devices:     []interface{}{button, led},
+		Connections: []gobot.Connection{spark},
+		Devices:     []gobot.Device{button, led},
 		Work:        work,
 	}
 

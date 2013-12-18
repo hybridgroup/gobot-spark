@@ -13,10 +13,23 @@ type SparkAdaptor struct {
 	gobot.Adaptor
 }
 
-func (me *SparkAdaptor) Connect() {
+func (me *SparkAdaptor) Connect() bool {
+	me.Connected = true
+	return true
 }
 
-func (me *SparkAdaptor) Disconnect() {
+func (me *SparkAdaptor) Reconnect() bool {
+	return me.Connect()
+}
+
+func (me *SparkAdaptor) Disconnect() bool {
+	me.Connected = false
+	return true
+}
+
+func (me *SparkAdaptor) Finalize() bool {
+	me.Disconnect()
+	return true
 }
 
 func (me *SparkAdaptor) AnalogRead(pin string) float64 {
