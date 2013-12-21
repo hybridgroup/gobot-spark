@@ -45,11 +45,11 @@ func (me *SparkAdaptor) AnalogRead(pin string) float64 {
 	return 0
 }
 
-func (me *SparkAdaptor) PwmWrite(pin string, level uint8) {
+func (me *SparkAdaptor) PwmWrite(pin string, level byte) {
 	me.AnalogWrite(pin, level)
 }
 
-func (me *SparkAdaptor) AnalogWrite(pin string, level uint8) {
+func (me *SparkAdaptor) AnalogWrite(pin string, level byte) {
 	params := url.Values{
 		"params":       {fmt.Sprintf("%v,%v", pin, level)},
 		"access_token": {me.Params["access_token"].(string)},
@@ -58,7 +58,7 @@ func (me *SparkAdaptor) AnalogWrite(pin string, level uint8) {
 	me.postToSpark(url, params)
 }
 
-func (me *SparkAdaptor) DigitalWrite(pin string, level string) {
+func (me *SparkAdaptor) DigitalWrite(pin string, level byte) {
 	params := url.Values{
 		"params":       {fmt.Sprintf("%v,%v", pin, me.pinLevel(level))},
 		"access_token": {me.Params["access_token"].(string)},
@@ -84,8 +84,8 @@ func (me *SparkAdaptor) deviceUrl() string {
 	return fmt.Sprintf("https://api.spark.io/v1/devices/%v", me.Params["device_id"])
 }
 
-func (me *SparkAdaptor) pinLevel(level string) string {
-	if level == "1" {
+func (me *SparkAdaptor) pinLevel(level byte) string {
+	if level == 1 {
 		return "HIGH"
 	} else {
 		return "LOW"
