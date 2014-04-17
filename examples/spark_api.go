@@ -27,7 +27,7 @@ func main() {
 		})
 	}
 
-	master.Robots = append(master.Robots, gobot.Robot{
+	master.Robots = append(master.Robots, &gobot.Robot{
 		Name:        "spark",
 		Connections: []gobot.Connection{spark},
 		Devices:     []gobot.Device{led},
